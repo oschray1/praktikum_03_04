@@ -41,5 +41,5 @@ main {
 }
 
 #field {
-    border: white 0.25rem solid;
+    object-fit: contain;
 }
