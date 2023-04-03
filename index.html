@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="libs.css">
     <link rel="stylesheet" href="styles.css">
     <title>Pong Spiel</title>
 </head>
+
 <body>
-    <canvas id="field" width="700" height="350"></canvas>
+    <main>
+        <h1 class="mt-2" id="headline">Pong Spiel</h1>
+        <div class="mh-2" id="current-scores">
+            <div class="player">
+                <p id="score1" class="mv-2">0</p>
+                <p id="name1" class="mv-2">Spieler 1</p>
+            </div>
+            <div class="player">
+                <p id="score2" class="mv-2">0</p>
+                <p id="player2" class="mv-2">Spieler 2</p>
+            </div>
+        </div>
+
+        <canvas id="field" width="850" height="425"></canvas>
+    </main>
+    <section id="score-table"></section>
+    <footer></footer>
 </body>
+
 </html>
