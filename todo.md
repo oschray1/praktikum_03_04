@@ -1,8 +1,8 @@
 | TO DO | Blocked | DOING | Review | DONE |
 | ----- | ------- | ----- | ------ | ---- |
 | To set the basic design of the app || :heavy_check_mark: |||
-| To draw a play-field with boundaries and division in the center |||||
-| To add the player, who can move up and down with the W and S keys |||||
+| To draw a play-field with boundaries and division in the center ||| :heavy_check_mark: ||
+| To add the player, who can move up and down with the W and S keys ||| :heavy_check_mark: ||
 | To add the ball and its movement |||||
 | To make the ball bounce from the borders and player |||||
 | To add the second player |||||
