@@ -10,6 +10,28 @@ class Ball {
     static get frontBound() { return Ball.x + Ball.radius; }
     static get backBound() { return Ball.x - Ball.radius; }
 
+    static checkOutOfField() {
+        if (Ball.x <= 0 || Ball.x >= width) {
+
+            let directionX;
+
+            if (Ball.x <= 0) {
+                directionX = 1;
+                pl2.score++;
+            }
+            else if (Ball.x >= width) {
+                directionX = -1;
+                pl1.score++;
+            }
+
+            Ball.newSet(0, 0);
+
+            setTimeout(
+                () => { Ball.newSet(directionX * 2.5, getRandomFloat(-2, 2)) },
+                1000);
+        }
+    }
+
     static checkCollusion() {
 
         if (Ball.y >= height - lineWidth - Ball.radius
@@ -24,56 +46,26 @@ class Ball {
                 Ball.speedY *= -1;
         }
 
-        // Collision with the first player
-        if (Ball.backBound <= pl1.frontBound && Ball.backBound >= pl1.backBound) {
-            if (Ball.y <= pl1.upperBound &&
-                Ball.y >= pl1.lowerBound) {
-                // Depend on the position of bounce, the ball becomes
-                // the different angle (Steigung) 
-                let localY = pl1.upperBound - Ball.y;
-                let heightOfBounce = localY / (pl1.height / 2) - 1;
-                console.log(heightOfBounce);
-                Ball.speedX *= -1.01; // Send the ball backwards
-                Ball.speedY = heightOfBounce * getRandomFloat(-10, -3) + getRandomFloat(-2, 2);
 
-                pl2.y = Ball.getYatX(pl2.x);
-            }
-            else { // Game over
-                pl2.score++;
-                Ball.x = halfWidth;
-                Ball.y = halfHeight;
-                Ball.speedX = 0;
-                Ball.speedY = 0;
-                setTimeout(
-                    () => Ball.newSet(2.5, getRandomFloat(-2, 2)),
-                    1000);
-            }
-        }
+        [pl1, pl2].forEach(pl => {
+            let distX = Math.abs(Ball.x - pl.x);
+            let distY = Math.abs(Ball.y - pl.y);
 
-        // Collision with the second player
-        if (Ball.x + Ball.radius <= pl2.frontBound && Ball.x + Ball.radius >= pl2.backBound) {
-            if (Ball.y <= pl2.upperBound &&
-                Ball.y >= pl2.lowerBound) {
-                let localY = pl2.upperBound - Ball.y;
-                let heightOfBounce = localY / (pl2.height / 2) - 1;
-                console.log(heightOfBounce);
-                Ball.speedX *= -1.01;
-                Ball.speedY = heightOfBounce * getRandomFloat(-10, -3) + getRandomFloat(-2, 2);
+            if (distX <= pl.halfWidth + Ball.radius) {
+                if (distY <= pl.halfHeight + Ball.radius) {
+                    const collisionZone = pl.height + Ball.radius * 2;
+                    let localY = pl.upperBound + Ball.radius - Ball.y;
+                    let bounceAngle = (localY / collisionZone) - 0.5;
+                    console.log(bounceAngle);
 
-                pl1.y = Ball.getYatX(pl1.x);
+                    Ball.speedX *= -1.01;
+                    Ball.speedY = Math.abs(Ball.speedX) * bounceAngle * -1.5;
+                }
+                else {
 
+                }
             }
-            else { // Game over
-                pl1.score++;
-                Ball.x = halfWidth;
-                Ball.y = halfHeight;
-                Ball.speedX = 0;
-                Ball.speedY = 0;
-                setTimeout(
-                    () => { Ball.newSet(-2.5, getRandomFloat(-2, 2)) },
-                    1000);
-            }
-        }
+        });
     }
 
     static getYatX(x) {
@@ -89,10 +81,10 @@ class Ball {
 
         if (y1 < 0) {
             y = y1 % (actualHeight * -1);
-            
-            if (numberOfBounces % 2 == 0) 
+
+            if (numberOfBounces % 2 == 0)
                 y = actualHeight + y;
-            else 
+            else
                 y *= -1;
         }
         else if (y1 <= actualHeight && y1 > lineWidth) {
@@ -101,9 +93,9 @@ class Ball {
         else if (y1 > actualHeight) {
             y = y1 % actualHeight;
 
-            if (numberOfBounces % 2 == 0) 
+            if (numberOfBounces % 2 == 0)
                 y = y;
-            else 
+            else
                 y = actualHeight - y;
         }
 
@@ -119,6 +111,7 @@ class Ball {
     }
 
     static show() {
+        Ball.checkOutOfField();
         Ball.checkCollusion();
 
         Ball.x += Ball.speedX;

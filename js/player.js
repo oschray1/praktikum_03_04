@@ -11,10 +11,13 @@ class Player {
         this.keyUp = keyUp;
     }
 
-    get upperBound() { return this.y + this.height / 2 }
-    get lowerBound() { return this.y - this.height / 2 }
-    get frontBound() { return this.x + this.width / 2 }
-    get backBound() { return this.x - this.width / 2 }
+    get upperBound() { return this.y + this.height / 2; }
+    get lowerBound() { return this.y - this.height / 2; }
+    get frontBound() { return this.x + this.width / 2; }
+    get backBound() { return this.x - this.width / 2; }
+
+    get halfWidth() { return this.width / 2; }
+    get halfHeight() { return this.height / 2; }
 
     checkPressedKey(event) {
         if (event.key == this.keyDown) {
