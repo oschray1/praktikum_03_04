@@ -30,6 +30,7 @@ main {
     width: 50%;
     display: flex;
     flex-wrap: nowrap;
+    align-items: center;
 }
 
 .player:nth-child(0) {
@@ -39,6 +40,24 @@ main {
 .player:nth-child(1) {
     flex-direction: row-reverse;
 }
+
+.white-border {
+    background-color: transparent;
+    border: 2px solid #FFFFFF;
+    border-radius: 2px 2px 2px 2px;
+    padding: 0.3rem;
+    font-weight: bold;
+}
+
+.disabled {
+    background-color: transparent;
+    text-align: center;
+    border: none;
+    padding: 0.3rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
 
 #field {
     object-fit: contain;

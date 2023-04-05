@@ -12,31 +12,37 @@
 
 <body>
     <main>
+        <!-- Top bar -->
         <h1 class="mt-2" id="headline">Pong Spiel</h1>
         <div class="mh-2" id="current-scores">
             <div class="player">
                 <p id="score1" class="mv-2">0</p>
-                <p id="name1" class="mv-2">Spieler 1</p>
+                <input type="text" id="name1" class="mv-2 white-border" value="Spieler 1">
             </div>
+            <div id="start-btn" class="white-border">START</div>
             <div class="player">
                 <p id="score2" class="mv-2">0</p>
-                <p id="name2" class="mv-2">Spieler 2</p>
+                <input type="text" id="name2" class="mv-2 white-border" value="Spieler 2">
             </div>
         </div>
-
+        <!-- Canvas -->
         <canvas id="field" width="850px" height="425px"></canvas>
     </main>
-    <section id="score-table"></section>
+    <section>
+        <table id="score-table"></table>
+    </section>
     <footer></footer>
 
     <!-- General setting and variables -->
     <script src="js/general.js"></script>
     <!-- Classes -->
     <script src="js/field.js"></script>
+    <script src="js/score_table.js"></script>
     <script src="js/player.js"></script>
-    <script src="js/ball.js"></script>
     <!-- Game script -->
     <script src="js/game.js"></script>
+    <!-- Ball class -->
+    <script src="js/ball.js"></script>
 </body>
 
 </html>

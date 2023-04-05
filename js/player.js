@@ -13,8 +13,8 @@ class Player {
 
     get upperBound() { return this.y + this.height / 2 }
     get lowerBound() { return this.y - this.height / 2 }
-    get frontBound() { return this.x + this.width / 2}
-    get backBound() { return this.x - this.width / 2}
+    get frontBound() { return this.x + this.width / 2 }
+    get backBound() { return this.x - this.width / 2 }
 
     checkPressedKey(event) {
         if (event.key == this.keyDown) {
@@ -36,10 +36,23 @@ class Player {
         }
     }
 
+    addRecord() {
+        if (localStorage) {
+            if (this.score == 20) {
+                let wins = parseInt(localStorage.getItem(this.name));
+
+                if (wins)
+                    localStorage.setItem(this.name, wins + 1);
+                else
+                    localStorage.setItem(this.name, 1);
+            }
+        } else console.log('Localstorage isn\'t supported in your browser');
+    }
+
     show() {
         if (this.upPressed && this.y >= this.height / 2)
             this.y -= this.speed;
-        else if (this.downPressed && this.y <= height - this.height / 2 )
+        else if (this.downPressed && this.y <= height - this.height / 2)
             this.y += this.speed;
 
 
