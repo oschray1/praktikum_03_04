@@ -1,5 +1,4 @@
-document.addEventListener('keydown', keyDownHandler, false);
-document.addEventListener('keyup', keyUpHandler, false);
+ScoreTable.show();
 
 const playerSpeed = 4.5;
 const playerHeight = oneTenth / 2;
@@ -8,8 +7,8 @@ const playerWidth = 7.5;
 var pl1 = new Player('Sp 1', playerHeight, playerWidth, 7 / 2, halfHeight, playerSpeed, 's', 'w');
 var pl2 = new Player('Sp 2', playerHeight, playerWidth, width - 7 / 2, halfHeight, playerSpeed, 'ArrowDown', 'ArrowUp');
 
-let nameInput1 = document.getElementById('name1');
-let nameInput2 = document.getElementById('name2');
+var nameInput1 = document.getElementById('name1');
+var nameInput2 = document.getElementById('name2');
 var score1 = document.getElementById('score1');
 var score2 = document.getElementById('score2');
 var startBtn = document.getElementById('start-btn');
@@ -19,6 +18,12 @@ startBtn.onclick = (e) => {
     let name2 = nameInput2.value;
 
     if (name1 && name2) {
+
+        if (name1 == name2) {
+            alert('Gebt bitte verschiedene Namen ein.');
+            return;
+        }
+
         nameInput1.disabled = true;
         nameInput2.disabled = true;
         nameInput1.setAttribute('class', 'mv-2 disabled');
@@ -31,9 +36,13 @@ startBtn.onclick = (e) => {
         draw();
     }
     else {
-        alert("Enter your names first!");
+        alert("Zuerst gebt bitte eure Namen ein.");
+        return;
     }
 }
+
+document.addEventListener('keydown', keyDownHandler, false);
+document.addEventListener('keyup', keyUpHandler, false);
 
 function keyDownHandler(e) {
     pl1.checkPressedKey(e);
@@ -75,6 +84,8 @@ function draw() {
         score2.innerHTML = 0;
         pl1.name = null;
         pl2.name = null;
+
+        ScoreTable.show();
     }
     else requestAnimationFrame(draw);
 }

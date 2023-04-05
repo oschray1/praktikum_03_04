@@ -39,9 +39,9 @@ class Ball {
             Ball.y <= 0 + lineWidth + Ball.radius
         ) {
             // Check on the ball go through the vertical margins of borders 
-            if (Ball.x >= Field.horizontalMargin
+            if (Ball.x >= Field.horizontalMargin - Ball.radius
                 &&
-                Ball.x <= width - Field.horizontalMargin)
+                Ball.x <= width - Field.horizontalMargin + Ball.radius)
                 // Change of the balls vector
                 Ball.speedY *= -1;
         }
@@ -60,6 +60,11 @@ class Ball {
 
                     Ball.speedX *= -1.01;
                     Ball.speedY = Math.abs(Ball.speedX) * bounceAngle * -1.5;
+
+                    if (pl.name == pl1.name)
+                        pl2.y = Ball.predictY(pl2.x)
+                    else
+                        pl1.y = Ball.predictY(pl1.x)
                 }
                 else {
 
@@ -68,38 +73,26 @@ class Ball {
         });
     }
 
-    static getYatX(x) {
-        let dx = x - Ball.x;
+    static predictY(x) {
+        const dx = x - Ball.x;
         // How many frames needs the ball to reach the X 
-        let frames = dx / Ball.speedX;
+        const frames = dx / Ball.speedX;
         // Y without the walls
         let y1 = Ball.y + (Ball.speedY * frames);
         let y; // Remove the "mirrors"
 
-        let actualHeight = height - lineWidth * 2;
-        const numberOfBounces = Math.abs(Math.floor(y1 / actualHeight));
+        const actualHeight = height - lineWidth * 2;
 
-        if (y1 < 0) {
-            y = y1 % (actualHeight * -1);
+        y = Math.abs(y1) % actualHeight;
 
-            if (numberOfBounces % 2 == 0)
-                y = actualHeight + y;
-            else
-                y *= -1;
-        }
-        else if (y1 <= actualHeight && y1 > lineWidth) {
-            y = y1;
-        }
-        else if (y1 > actualHeight) {
-            y = y1 % actualHeight;
+        const countOfBounces = Math.abs(y1) / actualHeight;
 
-            if (numberOfBounces % 2 == 0)
-                y = y;
-            else
-                y = actualHeight - y;
-        }
+        if (y1 < actualHeight)
+            return y;
 
-        return y;
+        if (countOfBounces % 2 != 0)
+            y = actualHeight - y;
+        else return y;
     }
 
     static newSet(speedX, speedY) {

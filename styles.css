@@ -58,6 +58,9 @@ main {
     font-size: 1.1rem;
 }
 
+#score-table {
+    margin: auto;
+}
 
 #field {
     object-fit: contain;
