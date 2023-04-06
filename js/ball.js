@@ -56,7 +56,6 @@ class Ball {
                     const collisionZone = pl.height + Ball.radius * 2;
                     let localY = pl.upperBound + Ball.radius - Ball.y;
                     let bounceAngle = (localY / collisionZone) - 0.5;
-                    console.log(bounceAngle);
 
                     Ball.speedX *= -1.01;
                     Ball.speedY = Math.abs(Ball.speedX) * bounceAngle * -1.5;
