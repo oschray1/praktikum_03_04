@@ -8,26 +8,40 @@ var nameInput2 = document.getElementById('name2');
 var score1 = document.getElementById('score1');
 var score2 = document.getElementById('score2');
 var startBtn = document.getElementById('start-btn');
+var compBtn = document.getElementById('computer-btn');
+var singleMode = false;
+
+function showInterface() {
+    nameInput1.disabled = false;
+    nameInput2.disabled = false;
+    nameInput1.setAttribute('class', 'mv-2 white-border');
+    nameInput2.setAttribute('class', 'mv-2 white-border');
+    startBtn.style.display = 'block';
+    compBtn.style.display = 'block';
+}
+
+function hideInterface() {
+    nameInput1.disabled = true;
+    nameInput2.disabled = true;
+    nameInput1.setAttribute('class', 'mv-2 disabled');
+    nameInput2.setAttribute('class', 'mv-2 disabled');
+    startBtn.style.display = 'none';
+    compBtn.style.display = 'none';
+}
 
 startBtn.onclick = (e) => {
     let name1 = nameInput1.value;
     let name2 = nameInput2.value;
 
     if (name1 && name2) {
-
         if (name1 == name2) {
             alert('Gebt bitte verschiedene Namen ein.');
             return;
         }
-
-        nameInput1.disabled = true;
-        nameInput2.disabled = true;
-        nameInput1.setAttribute('class', 'mv-2 disabled');
-        nameInput2.setAttribute('class', 'mv-2 disabled');
-
+        hideInterface();
         pl1.name = name1;
         pl2.name = name2;
-        e.target.style.display = 'none';
+        singleMode = false;
 
         draw();
     }
@@ -37,17 +51,29 @@ startBtn.onclick = (e) => {
     }
 }
 
+compBtn.onclick = (e) => {
+    pl2 = new Computer(width - playerWidth / 2, halfHeight);
+    singleMode = true;
+
+    hideInterface();
+    nameInput2.value = 'Computer';
+    pl1.name = name1;
+
+    draw();
+
+}
+
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 
 function keyDownHandler(e) {
     pl1.checkPressedKey(e);
-    pl2.checkPressedKey(e);
+    if (!singleMode) pl2.checkPressedKey(e);
 }
 
 function keyUpHandler(e) {
     pl1.checkLeftKey(e);
-    pl2.checkLeftKey(e);
+    if (!singleMode) pl2.checkLeftKey(e);
 }
 
 function draw() {
@@ -63,13 +89,13 @@ function draw() {
     score1.innerHTML = pl1.score;
     score2.innerHTML = pl2.score;
 
-    if (pl1.score == winScore || pl2.score == 20) {
-        startBtn.style.display = 'block';
+    if (pl1.Victory || pl2.Victory) {
 
-        nameInput1.disabled = false;
-        nameInput2.disabled = false;
-        nameInput1.setAttribute('class', 'mv-2 white-border');
-        nameInput2.setAttribute('class', 'mv-2 white-border');
+        showInterface();
+
+        if (singleMode)
+            nameInput2.value = '';
+
 
         pl1.addRecord();
         pl2.addRecord();

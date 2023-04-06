@@ -18,7 +18,7 @@ class Player extends Rectangle {
     }
 
     get Victory() {
-        return this.score == Player.winScore;
+        return this.score == winScore;
     }
 
     checkPressedKey(event) {

@@ -1,35 +1,33 @@
-class Computer {
-    constructor(height, width, x, y, speed) {
-        this.height = height;
-        this.width = width;
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
+class Computer extends Rectangle {
+    constructor(x, y) {
+        super(x, y, playerHeight, playerWidth)
+        this.speed = playerSpeed;
+        this.score = 0;
     }
 
-    get upperBound() { return this.y + this.height / 2; }
-    get lowerBound() { return this.y - this.height / 2; }
-    get frontBound() { return this.x + this.width / 2; }
-    get backBound() { return this.x - this.width / 2; }
-
-    get halfWidth() { return this.width / 2; }
-    get halfHeight() { return this.height / 2; }
+    get Victory() {
+        return this.score == winScore;
+    }
 
     moveTo(y) {
-        if (this.y < y) this.y += this.speed;
-        else if (this.y < y) this.y -= this.speed;
+
+        let distance = this.y - y;
+
+        if (Math.abs(distance) < this.speed)
+            return;
+
+        if (distance < 0)
+            this.y += this.speed;
+        else if (distance > 0)
+            this.y -= this.speed;
     }
 
-    draw() {
-        this.moveTo(Ball.predictY(this.x - Ball.radius));
+    addRecord() { }
 
-        ctx.beginPath();
-        ctx.rect(
-            this.x - (this.width / 2),
-            this.y - (this.height / 2),
-            this.width,
-            this.height);
-        ctx.fill();
-        ctx.closePath();
+    draw() {
+        if (Ball.x > this.halfWidth)
+            this.moveTo(Ball.predictY(this.x - Ball.radius));
+
+        super.draw();
     }
 }

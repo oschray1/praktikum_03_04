@@ -60,11 +60,6 @@ class Ball {
 
                     Ball.speedX *= -1.01;
                     Ball.speedY = Math.abs(Ball.speedX) * bounceAngle * -1.5;
-
-                    if (pl.name == pl1.name)
-                        pl2.y = Ball.predictY(pl2.x)
-                    else
-                        pl1.y = Ball.predictY(pl1.x)
                 }
                 else {
 
