@@ -1,10 +1,9 @@
-class Computer {
-    constructor(height, width, x, y, speed) {
-        this.height = height;
-        this.width = width;
+class Rectangle {
+    constructor(x, y, height, width) {
         this.x = x;
         this.y = y;
-        this.speed = speed;
+        this.height = height;
+        this.width = width;
     }
 
     get upperBound() { return this.y + this.height / 2; }
@@ -15,21 +14,11 @@ class Computer {
     get halfWidth() { return this.width / 2; }
     get halfHeight() { return this.height / 2; }
 
-    moveTo(y) {
-        if (this.y < y) this.y += this.speed;
-        else if (this.y < y) this.y -= this.speed;
-    }
-
     draw() {
-        this.moveTo(Ball.predictY(this.x - Ball.radius));
-
-        ctx.beginPath();
-        ctx.rect(
+        ctx.fillRect(
             this.x - (this.width / 2),
             this.y - (this.height / 2),
             this.width,
             this.height);
-        ctx.fill();
-        ctx.closePath();
     }
 }

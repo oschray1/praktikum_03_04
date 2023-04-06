@@ -1,11 +1,7 @@
 ScoreTable.show();
 
-const playerSpeed = 4.5;
-const playerHeight = oneTenth / 2;
-const playerWidth = 7.5;
-
-var pl1 = new Player('Sp 1', playerHeight, playerWidth, 7 / 2, halfHeight, playerSpeed, 's', 'w');
-var pl2 = new Player('Sp 2', playerHeight, playerWidth, width - 7 / 2, halfHeight, playerSpeed, 'ArrowDown', 'ArrowUp');
+var pl1 = new Player('Sp 1', playerWidth / 2, halfHeight, 's', 'w');
+var pl2 = new Player('Sp 2', width - playerWidth / 2, halfHeight, 'ArrowDown', 'ArrowUp');
 
 var nameInput1 = document.getElementById('name1');
 var nameInput2 = document.getElementById('name2');
@@ -60,14 +56,14 @@ function draw() {
 
     Field.draw();
 
-    pl1.show();
-    pl2.show();
+    pl1.draw();
+    pl2.draw();
     Ball.show();
 
     score1.innerHTML = pl1.score;
     score2.innerHTML = pl2.score;
 
-    if (pl1.score == 20 || pl2.score == 20) {
+    if (pl1.score == winScore || pl2.score == 20) {
         startBtn.style.display = 'block';
 
         nameInput1.disabled = false;
@@ -89,6 +85,3 @@ function draw() {
     }
     else requestAnimationFrame(draw);
 }
-
-
-

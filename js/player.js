@@ -1,23 +1,25 @@
-class Player {
-    constructor(name, height, width, x, y, speed, keyDown, keyUp) {
+const playerSpeed = 4.5;
+const playerHeight = 40;
+const playerWidth = 7.5;
+const winScore = 20;
+
+class Player extends Rectangle {
+    constructor(name, x, y, keyDown, keyUp) {
+        super(x, y, playerHeight, playerWidth);
+
         this.name = name;
         this.score = 0;
-        this.height = height;
-        this.width = width;
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
+        this.speed = playerSpeed;
         this.keyDown = keyDown;
         this.keyUp = keyUp;
+
+        this.downPressed = false;
+        this.upPressed = false;
     }
 
-    get upperBound() { return this.y + this.height / 2; }
-    get lowerBound() { return this.y - this.height / 2; }
-    get frontBound() { return this.x + this.width / 2; }
-    get backBound() { return this.x - this.width / 2; }
-
-    get halfWidth() { return this.width / 2; }
-    get halfHeight() { return this.height / 2; }
+    get Victory() {
+        return this.score == Player.winScore;
+    }
 
     checkPressedKey(event) {
         if (event.key == this.keyDown) {
@@ -39,33 +41,26 @@ class Player {
         }
     }
 
-    addRecord() {
-        if (localStorage) {
-            if (this.score == 20) {
-                let wins = parseInt(localStorage.getItem(this.name));
-
-                if (wins)
-                    localStorage.setItem(this.name, wins + 1);
-                else
-                    localStorage.setItem(this.name, 1);
-            }
-        } else console.log('Localstorage isn\'t supported in your browser');
-    }
-
-    show() {
+    move() {
         if (this.upPressed && this.y >= this.height / 2)
             this.y -= this.speed;
         else if (this.downPressed && this.y <= height - this.height / 2)
             this.y += this.speed;
+    }
 
+    addRecord() {
+        if (localStorage && this.Victory) {
+            let wins = parseInt(localStorage.getItem(this.name));
 
-        ctx.beginPath();
-        ctx.rect(
-            this.x - (this.width / 2),
-            this.y - (this.height / 2),
-            this.width,
-            this.height);
-        ctx.fill();
-        ctx.closePath();
+            if (wins)
+                localStorage.setItem(this.name, wins + 1);
+            else
+                localStorage.setItem(this.name, 1);
+        }
+    }
+
+    draw() {
+        this.move();    
+        super.draw();
     }
 }
